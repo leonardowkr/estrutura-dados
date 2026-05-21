@@ -1,0 +1,23 @@
+info:
+  name: Adicionar contato
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:8080/contatos
+  body:
+    type: json
+    data: |-
+      {
+        "nome": "Leonardo Wecker",
+        "telefone": "51991664773",
+        "email": "leowecker185@gmail.com"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,22 @@
+info:
+  name: Maiusculas
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: http://localhost:8080/maiusculas
+  body:
+    type: json
+    data: |-
+      [
+        "maçã",
+        "banana"
+      ]
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

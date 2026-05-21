@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="tela">
+        <form>
+            <fieldset>
+                <legend>Contato</legend>
+                <div class="campo">
+                    <label for="name">Nome
+                    <input type="text" id="name" placeholder="Seu nome completo"></label>
+                </div>
+                <label for="phone">Celular
+                <input type="number" id="phone" placeholder="(99) 99999-9999"></label>
+                <label for="email">E-mail
+                <input type="email" id="email" placeholder="nome@email.com"></label>
+                <button type="submit">Salvar    </button>
+            </fieldset>
+        </form>
+        <div id="lista">
+            
+        </div>
+    </div>      
+</body>
+<script>
+    document.querySelector('form').addEventListener('submit', (evento) => {
+  evento.preventDefault(); // impede a página de recarregar
+
+  fetch('http://localhost:8080/contatos', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nome: document.getElementById('name').value, telefone: document.getElementById('phone').value, email: document.getElementById('email').value })
+  });
+});
+    function carregaContato(){
+        fetch('http://localhost:8080/contatos')
+            .then(res => res.json())
+            .then(dados => {
+                const lista = document.getElementById('lista');
+                lista.innerHTML = '';
+                dados.forEach(contato => {
+                    lista.innerHTML += `
+                    <div class="lista">
+                        <div class="contato">
+                            <p class="nome" onclick = "mostrarContato(this)">${contato.nome}</p>
+                            <p class="telefone oculto">${contato.telefone}</p>
+                            <p class="email oculto">${contato.email}</p>
+                        </div>
+                    </div>`
+                });
+            })
+    }
+    function mostrarContato(elemento){
+        console.log('teste');
+        const contato = elemento.parentElement;
+        const telefone = contato.querySelector('.telefone');
+        const email = contato.querySelector('.email');
+        if(email.style.opacity == '0'){
+            email.style.transition = 'max-height 0.4s ease, opacity 0.4s ease';
+            telefone.style.transition = 'max-height 0.4s ease, opacity 0.4s ease';
+            email.style.opacity = '1';
+            telefone.style.opacity = '1';
+            
+        }
+        else{
+            
+            email.style.opacity = '0';
+            telefone.style.opacity = '0';
+            email.addEventListener('transitionend', () => {
+                email.style.display = 'none';
+            }, { once: true });
+            telefone.addEventListener('transitionend', () => {
+                telefone.style.display = 'none';
+            }, { once: true });
+        }
+        
+    }
+    carregaContato();
+</script>
+</html>

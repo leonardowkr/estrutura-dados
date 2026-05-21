@@ -1,0 +1,25 @@
+info:
+  name: Criar usuário
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: http://localhost:8080/usuarios
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Leo",
+        "surname": "Wecker",
+        "age": 23,
+        "address": "hsuehuese",
+        "email": "leowecker186@gmail.com"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
