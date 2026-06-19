@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=call" />
 </head>
 <body>
     <div id="tela">
@@ -45,39 +46,28 @@
                 lista.innerHTML = '';
                 dados.forEach(contato => {
                     lista.innerHTML += `
-                    <div class="lista">
                         <div class="contato">
-                            <p class="nome" onclick = "mostrarContato(this)">${contato.nome}</p>
-                            <p class="telefone oculto">${contato.telefone}</p>
-                            <p class="email oculto">${contato.email}</p>
+                            <div class="alinhado">
+                                <p class="nome" onclick = "mostrarContato(this)">${contato.nome}
+                                    <span class="material-symbols-outlined">call</span>
+                                </p>
+                            </div>
+                            <div class= "dados">
+                                <p class="telefone">Celular: ${contato.telefone}</p>
+                                <p class="email">E-mail: ${contato.email}</p>
+                            </div>
                         </div>
-                    </div>`
+`
                 });
             })
     }
     function mostrarContato(elemento){
         console.log('teste');
-        const contato = elemento.parentElement;
+        const contato = elemento.parentElement.parentElement;
         const telefone = contato.querySelector('.telefone');
         const email = contato.querySelector('.email');
-        if(email.style.opacity == '0'){
-            email.style.transition = 'max-height 0.4s ease, opacity 0.4s ease';
-            telefone.style.transition = 'max-height 0.4s ease, opacity 0.4s ease';
-            email.style.opacity = '1';
-            telefone.style.opacity = '1';
-            
-        }
-        else{
-            
-            email.style.opacity = '0';
-            telefone.style.opacity = '0';
-            email.addEventListener('transitionend', () => {
-                email.style.display = 'none';
-            }, { once: true });
-            telefone.addEventListener('transitionend', () => {
-                telefone.style.display = 'none';
-            }, { once: true });
-        }
+        contato.querySelector('.telefone').classList.toggle('visivel');
+        contato.querySelector('.email').classList.toggle('visivel');
         
     }
     carregaContato();
